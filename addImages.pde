@@ -1,26 +1,14 @@
 
-
-void addImages () {
+// display and by default the a and b parameters define the location of its upper-left corner.
+void addImages(float yPosition, int offset, PImage imageShowing) {
+  
  //tint(50);
  //tint(255);
   
-    if (l == supNumFrames-1) {
-     l = 0; 
-    }
-    else {
-      l++;
-    }
+ 
     
-     if (m >= secSupNumFrames-2) {
-     m = 1; 
-    }
-    else {
-      m++;
-    }
-  
-    image(supportingImages[l], 0, 0, width, height);
-
-    image(secondarySupportingImages[m], 0, 0, width, height);
-  
-  image(staticImage, 0, 0);
+  float endYLocation = yPosition + offset;
+  //endYLocation = 200;
+    
+    image(imageShowing, 0, endYLocation, width, height);
 }

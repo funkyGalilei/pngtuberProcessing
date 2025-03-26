@@ -6,17 +6,16 @@ Amplitude liveAmp;
 
 SoundFile file;
 
-int numFrames = 48;
-int supNumFrames = 240;
-int secSupNumFrames = 130;
-int currentFrame = 0;
-
 String outputFolder = "newFolder/";
 
+int numFrames = 96;
 PImage[] images = new PImage[numFrames];
-PImage staticImage;
+
+int supNumFrames = 240;
 PImage[] supportingImages = new PImage[supNumFrames];
-PImage[] secondarySupportingImages = new PImage[secSupNumFrames];
+
+PImage staticImage;
+
 
 int frameScan = 50;
 float[] arrayAmp = new float[frameScan];
@@ -33,23 +32,12 @@ void setup() {
     
     liveAmp = new Amplitude(this);
     liveAmp.input(input);
-  
-  
-  // LOADING IMAGES ==============================
-    staticImage = loadImage("static/base head.png");
     
-    for (int i = 1; i < numFrames; i++) {
-       String imageName = nf(i, 4) + ".png";
-       images[i-1] = loadImage(imageName);
-    }
-      for (int i = 1; i <= supNumFrames; i++) {
-        String imageName = "cloak2/" + nf(i, 4) + ".png";
-       supportingImages[i-1] = loadImage(imageName);
-    }
-        for (int i = 1; i < secSupNumFrames; i++) {
-        String imageName = "light/" + nf(i, 4) + ".png";
-       secondarySupportingImages[i] = loadImage(imageName);
-    }
+  // LOADING IMAGES ==============================
+
+      staticImage = load1Image("folder", staticImage);
+      images = loadImages("visor", numFrames, images);
+      supportingImages = loadImages("billowingCloak", 240, supportingImages);
 }
 
 //  ITERATORS
@@ -57,7 +45,6 @@ int j = 0; // used to index
 int i = 1; // tells time
 int k = 1; // used by the visualizer
 int l = 1; // used to loop thru supporting images
-int m = 1; // secondary
 
 float ampAnalyzer = 0;
 float ampVisualizer;
@@ -75,15 +62,22 @@ void draw() {
   noCursor();
   
   someMotion(i, amplitude);
-  addImages(motion, amplitude);
-  
+  addImages(motion, amplitude, supportingImages[l]);
+  addImages(motion, amplitude, staticImage);
   ampAnalyzer = liveAmp.analyze();
 
   float modifiedAudio = audioFilter(ampAnalyzer);
   
   i++;
   
-  j = int(round(map(ampAnalyzer, 0, 1, 10, numFrames)));
+     if (l == supNumFrames-1) {
+     l = 0; 
+    }
+    else {
+      l++;
+    }
+  
+  j = int(round(map(modifiedAudio, 0, 1, 10, numFrames)));
     //j = int(round(map(arrayAmp[i], 0, 1, 0, numFrames)));
 
   //ampVisualizer = int(round(map(ampAnalyzer, 0, numFrames, 0, height)));
@@ -92,7 +86,7 @@ void draw() {
     
     image(images[(j)], 0, motion + amplitude, width, height);
 
-    visualize();
+    //visualize();
     diagnostics();
 
 }
