@@ -4,9 +4,15 @@ void addImages(float yPosition, int offset, PImage imageShowing) {
   
  //tint(50);
  //tint(255);
-  
- 
-    
+
+  if (l < 237) {
+    l = l +1;
+  } else {
+    print("secondary reset");
+    l = 2;
+  }
+
+
   float endYLocation = yPosition + offset;
   //endYLocation = 200;
     

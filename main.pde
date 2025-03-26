@@ -36,7 +36,7 @@ void setup() {
   // LOADING IMAGES ==============================
 
       staticImage = load1Image("folder", staticImage);
-      images = loadImages("visor", numFrames, images);
+      images = loadImages("visor", 96, images);
       supportingImages = loadImages("billowingCloak", 240, supportingImages);
 }
 
@@ -55,6 +55,8 @@ float micSupressionHigh = 0.9;
 float micSensitivity = 1;
 
 int amplitude = height/20;
+boolean state = true;
+
 
 void draw() {
   colorMode(RGB, 255);
@@ -62,24 +64,22 @@ void draw() {
   noCursor();
   
   someMotion(i, amplitude);
-  addImages(motion, amplitude, supportingImages[l]);
+  
+  addImages(motion, amplitude, supportingImages[l]); //should b l
   addImages(motion, amplitude, staticImage);
+  
   ampAnalyzer = liveAmp.analyze();
 
   float modifiedAudio = audioFilter(ampAnalyzer);
   
   i++;
   
-     if (l == supNumFrames-1) {
-     l = 0; 
-    }
-    else {
-      l++;
-    }
-  
-  j = int(round(map(modifiedAudio, 0, 1, 10, numFrames)));
+  if (state) {
+    j = int(round(map(modifiedAudio, 0, 1, 48, numFrames)));
     //j = int(round(map(arrayAmp[i], 0, 1, 0, numFrames)));
-
+  } else {
+        j = int(round(map(modifiedAudio, 0, 1, 0, numFrames)));
+  }
   //ampVisualizer = int(round(map(ampAnalyzer, 0, numFrames, 0, height)));
      
     j = numFrames - j; // to invert
@@ -87,6 +87,7 @@ void draw() {
     image(images[(j)], 0, motion + amplitude, width, height);
 
     //visualize();
+    stateSwitch();
     diagnostics();
 
 }

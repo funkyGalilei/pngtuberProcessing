@@ -21,6 +21,7 @@ PImage[] loadImages (String folderName, int numFrames, PImage[] returnedImages) 
     for (int i = 1; i < numFrames; i++) {
        String imageName = folderName + "/" + nf(i, 4) + ".png";
        createdImages[i-1] = loadImage(imageName);
+       print(folderName + (i - 1) +" loaded\n");
     }
   
   returnedImages = createdImages;

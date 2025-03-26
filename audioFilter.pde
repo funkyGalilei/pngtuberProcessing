@@ -2,6 +2,8 @@
 // accept audioSource from .analyze, so a normalized float, then 
 // returns a modified wave that is still mapped from 0 to 1
 
+// values tuned to the Yeti mic!
+
  float audioFilter(float audioSource){
 
 // now maybe BOOSTING the noise values to make it more smooth 
