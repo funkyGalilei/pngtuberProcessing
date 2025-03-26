@@ -2,18 +2,6 @@
 // load images with total frame input, and folder input, and whether or not its static
 // return an image data type, and create the PImages in this tab to make it easier 
 
-PImage load1Image (String folderName, PImage returnedImage) {
-
-      //loadImage      
-      PImage createdImage;
-
-      createdImage = loadImage("static/base head.png");
-      returnedImage = createdImage;
-      folderName = folderName + "/";
-      
-      return returnedImage;
-}
-
 PImage[] loadImages (String folderName, int numFrames, PImage[] returnedImages) {
   
   PImage[] createdImages = new PImage[numFrames];

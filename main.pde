@@ -1,5 +1,19 @@
 import processing.sound.*;
 
+ChildApplet child;
+boolean mousePressedOnParent = false;
+
+// TABLET MAPPING
+float tabX;
+float tabY;
+int mainHeight = 400;
+int mainWidth = 270;
+int setHeight = 400;
+int setWidth = 400;
+int childHeight = 700;
+int childWidth = 600;
+int padding = 50;
+
 AudioIn input;
 Amplitude amp;
 Amplitude liveAmp;
@@ -15,16 +29,23 @@ int supNumFrames = 240;
 PImage[] supportingImages = new PImage[supNumFrames];
 
 PImage staticImage;
-
+PImage tabletImg;
+PImage handImg;
 
 int frameScan = 50;
 float[] arrayAmp = new float[frameScan];
 float[] mouseInput = new float[frameScan];
 
+boolean state;
+
 void setup() {
-    size(270*2, 400*2);
+    size(400, 400);
+    
     frameRate(24);
     noSmooth();
+
+    windowTitle("Main sketch");
+    child = new ChildApplet();
 
     liveAmp = new Amplitude(this);
     input = new AudioIn(this, 0);
@@ -35,9 +56,11 @@ void setup() {
     
   // LOADING IMAGES ==============================
 
-      staticImage = load1Image("folder", staticImage);
-      images = loadImages("visor", 96, images);
-      supportingImages = loadImages("billowingCloak", 240, supportingImages);
+      staticImage = loadImage("static/base head.png");
+      tabletImg = loadImage("static/knight tablet.png");
+      handImg = loadImage("static/knight hand.png");
+      images = loadImages("visor", numFrames, images);
+      supportingImages = loadImages("billowingCloak", supNumFrames, supportingImages);
 }
 
 //  ITERATORS
@@ -46,22 +69,20 @@ int i = 1; // tells time
 int k = 1; // used by the visualizer
 int l = 1; // used to loop thru supporting images
 
+// AUDIO WAVE CHANGER
 float ampAnalyzer = 0;
 float ampVisualizer;
 float motion = 0;
-
-float micSupressionLow = 0.16;
-float micSupressionHigh = 0.9;
-float micSensitivity = 1;
+float modifiedAudio = 0;
 
 int amplitude = height/20;
-boolean state = true;
-
 
 void draw() {
   colorMode(RGB, 255);
-  background(0, 255, 0);
+  background(255, 0, 255);
   noCursor();
+  
+  stateSwitch();
   
   someMotion(i, amplitude);
   
@@ -70,7 +91,7 @@ void draw() {
   
   ampAnalyzer = liveAmp.analyze();
 
-  float modifiedAudio = audioFilter(ampAnalyzer);
+  modifiedAudio = audioFilter(ampAnalyzer);
   
   i++;
   
@@ -84,10 +105,25 @@ void draw() {
      
     j = numFrames - j; // to invert
     
-    image(images[(j)], 0, motion + amplitude, width, height);
+    image(images[(j)], 0, motion + amplitude, mainWidth, mainHeight);
 
-    //visualize();
-    stateSwitch();
+if (mousePressed) {
+    fill(0);
+    text("Mouse pressed on parent.", 10, 10);
+    fill(0, 240, 0);
+    ellipse(mouseX, mouseY, 60, 60);
+    mousePressedOnParent = true;
+  } else {
+    fill(20);
+    //ellipse(width/2, height/2, 60, 60);
+    mousePressedOnParent = false;
+  }
+  //box(100);
+  if (child.mousePressed) {
+    text("Mouse pressed on child.", 10, 30);
+  }
+    tablet();
+    image(tabletImg, width/15, height * 2/3, 390, height/2);  
+    visualize();
     diagnostics();
-
 }

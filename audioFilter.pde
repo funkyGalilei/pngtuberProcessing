@@ -25,7 +25,6 @@
  //if (modAmpAnalyzer < micSupressionHigh) {
  //  modAmpAnalyzer = 0.6;
  //}
- 
   
   // DELAY - keeping that value for a set amount of time (with i)
   // if the past arrayAmp value is bigger 
