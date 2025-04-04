@@ -21,45 +21,46 @@ void tablet() {
   
 }
 
-class ChildApplet extends PApplet {
+//class ChildApplet extends PApplet {
     
-  public ChildApplet() {
-    super();
-    PApplet.runSketch(new String[]{this.getClass().getName()}, this);
-  }
+//  public ChildApplet() {
+//    super();
+//    PApplet.runSketch(new String[]{this.getClass().getName()}, this);
+//  }
   
-    public void settings() {
-    size(600, 700);
-  }
-   public void setup() { 
-    windowTitle("Child sketch");
-  }
+//    public void settings() {
+//    //size(600, 700);
+//    fullScreen();
+//  }
+//   public void setup() { 
+//    windowTitle("Child sketch");
+//  }
   
-    public void draw() {
-    background(0);
+//    public void draw() {
+//    background(0);
 
-    if (mousePressed) {
-      fill(240, 0, 0);
-      ellipse(mouseX, mouseY, 20, 20);
-      fill(255);
-      text("Mouse pressed on child.", 10, 30);
-             tabX = mouseX;
-      tabY = mouseY;
+//    if (mousePressed) {
+//      fill(240, 0, 0);
+//      ellipse(mouseX, mouseY, 20, 20);
+//      fill(255);
+//      text("Mouse pressed on child.", 10, 30);
+//             tabX = mouseX;
+//      tabY = mouseY;
    
-    } else {
-      fill(255);
-      //ellipse(width/2, height/2, 20, 20);
-      ellipse(mouseX, mouseY, 20, 20);  
-             tabX = mouseX;
-      tabY = mouseY;
-    }
+//    } else {
+//      fill(255);
+//      //ellipse(width/2, height/2, 20, 20);
+//      ellipse(mouseX, mouseY, 20, 20);  
+//             tabX = mouseX;
+//      tabY = mouseY;
+//    }
    
 
-    //box(100, 200, 100);
-    if (mousePressedOnParent) {
-      fill(255);
-      text("Mouse pressed on parent", 20, 20);
-    }
-  }
+//    //box(100, 200, 100);
+//    if (mousePressedOnParent) {
+//      fill(255);
+//      text("Mouse pressed on parent", 20, 20);
+//    }
+//  }
   
-}
+//}

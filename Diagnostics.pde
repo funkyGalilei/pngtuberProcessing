@@ -3,7 +3,6 @@
        
        print("amp: " + nf(ampAnalyzer, 0, 2) +"  ");
         print("mod: " + nf(modifiedAudio, 0, 2) +"   ");
-       //print("modified analysis: " + modAmpAnalyzer + "\t" );
        print("time: "+i +"  " + "index: "+ j +"\t\t" + "movement: " + nf(motion, 1, 2) +"\t");
        print("state: " + state + "  ");
        print("l: " + nf(l, 3) + "  ");
